@@ -9,7 +9,7 @@
 namespace Dmgctrlr\LaraOsrm;
 
 
-class TableServiceRequest
+class TableServiceRequest extends BaseServiceRequest
 {
     /**
      * Specifies the name of the service passed in the URL
@@ -19,11 +19,17 @@ class TableServiceRequest
 
     /**
      * These are the default OSRM parameters for the match service
+     * see http://project-osrm.org/docs/v5.5.1/api/#table-service
      * @var array
      */
     public $options = [
-        'sources'       => [],
-        'destinations'  => []
+        'sources'       => [], // array of coordinates indexes to consider as start points
+        'destinations'  => [], // array of coordinates indexes to consider as end points
     ];
+
+    public function setOptions(...$options): parent
+    {
+
+    }
 
 }

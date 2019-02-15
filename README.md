@@ -1,8 +1,9 @@
 # Wrapper around OSRM for Laravel
 
+[![Build Status](https://img.shields.io/travis/com/dmgctrlr/lara-osrm/master.svg?style=flat-square)](https://travis-ci.com/dmgctrlr/lara-osrm)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/dmgctrlr/lara-osrm.svg?style=flat-square)](https://packagist.org/packages/dmgctrlr/lara-osrm)
-[![Build Status](https://img.shields.io/travis/dmgctrlr/lara-osrm/master.svg?style=flat-square)](https://travis-ci.org/dmgctrlr/lara-osrm)
-[![Total Downloads](https://img.shields.io/packagist/dt/dmgctrlr/lara-osrm.svg?style=flat-square)](https://packagist.org/packages/dmgctrlr/lara-osrm)
+![PHP Version Minimum](https://img.shields.io/packagist/php-v/dmgctrlr/lara-osrm.svg?style=flat-square)
+[![License](https://img.shields.io/packagist/l/dmgctrlr/lara-osrm.svg?style=flat-square)](https://packagist.org/packages/dmgctrlr/lara-osrm)
 
 This package is a simple wrapper for querying OSRM. It assumes you have an OSRM v5.x server available. It supports route, nearest, table, match, and trip services. Driving is the only profile currently supported.
 
