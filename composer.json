@@ -1,0 +1,56 @@
+{
+    "name": "dmgctrlr/lara-osrm",
+    "description": "",
+    "keywords": [
+        "dmgctrlr",
+        "lara-osrm"
+    ],
+    "minimum-stability": "dev",
+    "homepage": "https://github.com/dmgctrlr/lara-osrm",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Daniel",
+            "email": "dm@mediavariance.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "illuminate/support": "5.6.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.7.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dmgctrlr\\LaraOsrm\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dmgctrlr\\LaraOsrm\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dmgctrlr\\LaraOsrm\\LaraOsrmServiceProvider"
+            ],
+            "aliases": {
+                "LaraOsrm": "Dmgctrlr\\LaraOsrm\\LaraOsrmFacade"
+            }
+        }
+    }
+}

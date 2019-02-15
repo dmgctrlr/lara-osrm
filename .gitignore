@@ -1,0 +1,10 @@
+build
+composer.lock
+docs
+vendor
+coverage
+/.idea
+/.vagrant
+.env
+.DS_Store
+.editorconfig
