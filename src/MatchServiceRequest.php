@@ -30,4 +30,15 @@ class MatchServiceRequest extends BaseServiceRequest
 //        'radiuses'    => 'false',
     ];
 
+    public function setOptions(...$options): parent
+    {
+        parent::setOptions($options);
+dd( $options[0] );
+        $this->options['timestamps'] = implode(';', $options[0] );
+        $this->options['radiuses'] = implode(';', $options[1] );
+
+        dd( $this->options );
+        return $this;
+    }
+
 }
