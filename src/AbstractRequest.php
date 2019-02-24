@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 
 abstract class AbstractRequest
 {
-    public $url;
+    private $url;
     /**
      * @var Client
      */
@@ -18,18 +18,14 @@ abstract class AbstractRequest
     public function __construct()
     {
         $this->url = config('lara-osrm.host') . ':' . config('lara-osrm.port') . '/';
-        $this->client = new Client(); // doesn't seem right to do this here
+        $this->client = new Client();
     }
 
     public function send()
     {
-        // build url here?
-        $this->url .= $this->buildBaseURL().'/'. $this->buildCoordinatesURL().'?'.$this->buildOptionsURL();
+        $this->url .= $this->buildBaseURL() . '/' . $this->buildCoordinatesURL() . '?' . $this->buildOptionsURL();
 
-        // maybe we should throw an exception here if the request fails
-
-
-        return $this->client->post($this->url);
+        return $this->client->post($this->url, ['connect_timeout' => 3.14]);
     }
 
     /**
@@ -41,8 +37,28 @@ abstract class AbstractRequest
         return $this->service . '/' . $this->version . '/' . $this->profile;
     }
 
-    abstract function buildCoordinatesURL();
+    /**
+     * Create the coordinates url string
+     * @return string
+     */
+    public function buildCoordinatesURL(): string
+    {
+        $coordinates = [];
+        foreach ($this->coordinates as $coordinate) {
+            $coordinates[] = "$coordinate[0],$coordinate[1]";
+        }
 
-    abstract function buildOptionsURL();
+        return implode(';', $coordinates);
+    }
+
+    /**
+     * Create the options url query
+     * @return string
+     */
+    public function buildOptionsURL(): string
+    {
+        // set to query_string the array of options
+        return http_build_query($this->options); // todo test null/false etc
+    }
 
 }

@@ -13,12 +13,33 @@ class BaseServiceRequest extends AbstractRequest
     public $coordinates; // all extending classes must set coordinates (some accept only one (nearest))
 
     /**
+     * @param string $name
+     * @return $this
+     */
+    public function setProfile(?string $name = 'driving')
+    {
+        $this->profile = $name;
+        return $this;
+    }
+
+    /**
      * @param array $coordinates
      * @return BaseServiceRequest
      */
     public function setCoordinates(array $coordinates): self
     {
         $this->coordinates = $coordinates;
+        return $this;
+    }
+
+    /**
+     * Append a coordinate to the coordinates array
+     * @param array $coordinates
+     * @return BaseServiceRequest
+     */
+    public function addCoordinate(array $coordinates): self
+    {
+        $this->coordinates[] = $coordinates;
         return $this;
     }
 
@@ -30,51 +51,27 @@ class BaseServiceRequest extends AbstractRequest
     {
         // loop over the options and add them if supported by the service
         foreach ($options as $option) {
-            if (is_array($option)) {
-                if (!isset($this->options[array_keys($option)[0]])) {
-                    continue; // option not supported
-                }
-                $this->options[array_keys($option)[0]] = array_values($option)[0];
-            } else {
-                if (!isset($this->options[$option])) {
-                    continue; // option not supported
-                }
-                $this->options[$option] = 'true';
-            }
+            $this->addOption($option);
         }
 
         return $this;
     }
 
     /**
-     * Add the coordinates
-     * @return string
+     * Add an option
+     * @param $option
      */
-    public function buildCoordinatesURL(): string
+    public function addOption($option): void
     {
-        $coordinates = [];
-        foreach ($this->coordinates as $coordinate) {
-            $coordinates[] = "$coordinate[0],$coordinate[1]";
+        if (is_array($option)) {
+            if (isset($this->options[array_keys($option)[0]])) {
+                $this->options[array_keys($option)[0]] = array_values($option)[0];
+            }
+        } else {
+            if (isset($this->options[$option])) {
+                $this->options[$option] = 'true';
+            }
         }
-
-        return implode(';', $coordinates);
     }
-
-    /**
-     * Add available options
-     * @return string
-     */
-    public function buildOptionsURL(): string
-    {
-        // set to query_string the array of options
-        return http_build_query($this->options); // todo test null/false etc
-    }
-
-    /**
-     * make a standard send method to take over in case a service
-     * does not specify one
-     *
-     * maybe sendData ??
-     */
 
 }

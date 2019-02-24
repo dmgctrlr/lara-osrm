@@ -4,14 +4,14 @@ namespace Dmgctrlr\LaraOsrm;
 
 class LaraOsrm
 {
-    // see http://project-osrm.org/docs/v5.5.1/api/?language=cURL#nearest-service
+    // see http://project-osrm.org/docs/v5.5.1/api/#requests
 
     /**
      * Finds the fastest route between coordinates in the supplied order.
      *
      * @return RouteServiceRequest
      */
-    public function drivingDistance()
+    public function route()
     {
         return new RouteServiceRequest();
     }
@@ -21,7 +21,7 @@ class LaraOsrm
      *
      * @return TripServiceRequest
      */
-    public function tsp()
+    public function trip()
     {
         return new TripServiceRequest();
     }

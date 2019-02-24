@@ -22,10 +22,4 @@ class RouteServiceRequest extends BaseServiceRequest
         'overview'     => 'simplified', // simplified, full or false
     ];
 
-    /**
-     * if creating a new response object type
-     * ???
-     * over ride the send method? guzzlehttp response?
-     */
-
 }

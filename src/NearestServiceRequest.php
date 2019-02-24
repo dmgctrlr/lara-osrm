@@ -25,7 +25,8 @@ class NearestServiceRequest extends BaseServiceRequest
         'number' => 1
     ];
 
-    public function setCoordinates(array $coordinates): BaseServiceRequest {
+    public function setCoordinates(array $coordinates): BaseServiceRequest
+    {
         // nearest can only have 1, so wrap the lat/lon
         $this->coordinates = [$coordinates];
         return $this;

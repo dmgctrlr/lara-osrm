@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Dmgctrlr\LaraOsrm\Skeleton\SkeletonClass
  */
-class LaraOsrmFacade extends Facade
+class Osrm extends Facade
 {
     /**
      * Get the registered name of the component.
