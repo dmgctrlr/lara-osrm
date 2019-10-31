@@ -6,8 +6,8 @@ use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
 abstract class AbstractResponse
 {
-    private $response;
-    private $responseJson;
+    protected $response;
+    protected $responseJson;
     /**
      * @var Client
      */

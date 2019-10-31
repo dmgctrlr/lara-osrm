@@ -50,6 +50,9 @@ abstract class AbstractRequest
      */
     public function buildCoordinatesURL(): string
     {
+        if (!isset($this->coordinates)) {
+            throw new \Exception('Coordinates not set');
+        }
         $coordinates = [];
         foreach ($this->coordinates as $coordinate) {
             $coordinates[] = "$coordinate[0],$coordinate[1]";

@@ -6,6 +6,8 @@ use Dmgctrlr\LaraOsrm\AbstractResponse;
 
 class RouteServiceResponse extends AbstractResponse
 {
+    private $routes;
+
     public function getStatus()
     {
         return $this->responseJson->code;
@@ -16,13 +18,24 @@ class RouteServiceResponse extends AbstractResponse
         return $this->responseJson->waypoints;
     }
 
-    public function getRoute()
+    public function getRoutes()
     {
-        return $this->responseJson->routes;
+        if (!isset($this->routes)) {
+            $routes = [];
+            foreach ($this->responseJson->routes as $route) {
+                $routes[] = new Route($route);
+            }
+            $this->routes = $routes;
+        }
+        return $this->routes;
     }
 
     public function getFirstRoute()
     {
-        return $this->responseJson->routes[0];
+        $routes = $this->getRoutes();
+        if (isset($routes[0])) {
+            $this->getRoute()[0];
+        }
+        throw new \Exception('No routes found');
     }
 }
