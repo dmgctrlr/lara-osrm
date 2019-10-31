@@ -14,12 +14,5 @@ class RouteServiceRequest extends BaseServiceRequest
      * These are the default OSRM parameters for the route service
      * @var array
      */
-    public $options = [
-        'alternatives' => 'false',
-        'steps'        => 'false',
-        'annotations'  => 'false',
-        'geometries'   => 'polyline', // polyline, polyline6 or geojson
-        'overview'     => 'simplified', // simplified, full or false
-    ];
-
+    public $options = [];
 }

@@ -4,6 +4,8 @@ namespace Dmgctrlr\LaraOsrm;
 
 use GuzzleHttp\Client;
 
+use Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse;
+
 abstract class AbstractRequest
 {
     private $url;
@@ -15,17 +17,22 @@ abstract class AbstractRequest
     /**
      * AbstractRequest constructor.
      */
-    public function __construct()
+    public function __construct($config = [])
     {
-        $this->url = config('lara-osrm.host') . ':' . config('lara-osrm.port') . '/';
+        $host = isset($config['host']) ? $config['host'] : config('lara-osrm.host', 'router.project-osrm.org');
+        $port = isset($config['port']) ? $config['port'] : config('lara-osrm.port', '80');
+        $this->url = $host . ':' . $port . '/';
         $this->client = new Client();
     }
 
     public function send()
     {
         $this->url .= $this->buildBaseURL() . '/' . $this->buildCoordinatesURL() . '?' . $this->buildOptionsURL();
-
-        return $this->client->post($this->url, ['connect_timeout' => 3.14]);
+        $curlResponse = $this->client->get($this->url, ['connect_timeout' => 3.14]);
+        switch ($this->service) {
+            case 'route':
+                return new RouteServiceResponse($curlResponse);
+        }
     }
 
     /**
@@ -60,5 +67,4 @@ abstract class AbstractRequest
         // set to query_string the array of options
         return http_build_query($this->options); // todo test null/false etc
     }
-
 }
