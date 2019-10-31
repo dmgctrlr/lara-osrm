@@ -3,6 +3,7 @@
 namespace Dmgctrlr\LaraOsrm\Responses;
 
 use Dmgctrlr\LaraOsrm\AbstractResponse;
+use Dmgctrlr\LaraOsrm\Models\Route;
 
 class RouteServiceResponse extends AbstractResponse
 {
@@ -34,7 +35,7 @@ class RouteServiceResponse extends AbstractResponse
     {
         $routes = $this->getRoutes();
         if (isset($routes[0])) {
-            $this->getRoute()[0];
+            $this->getRoutes()[0];
         }
         throw new \Exception('No routes found');
     }
