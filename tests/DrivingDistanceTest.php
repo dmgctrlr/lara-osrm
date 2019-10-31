@@ -20,6 +20,6 @@ class DrivingDistanceTest extends TestCase
             [-112.065295, 33.602053],
             [-112.023641, 33.626367]
         ])->send();
-        var_dump($response->getFirstRoute());
+        $this->assertEquals('Ok', $response->getStatus());
     }
 }
