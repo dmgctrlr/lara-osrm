@@ -17,13 +17,24 @@ composer require dmgctrlr/lara-osrm
 
 ## Usage
 
+## Route Calculation
 ``` php
-$response = LaraOsrmFacade::drivingDistance()
-    ->setCoordinates([
+
+use Dmgctrlr\LaraOsrm\RouteServiceRequest;
+
+$request = new RouteServiceRequest();
+$request->setCoordinates([
         [-112.068195, 33.712053],
         [-112.065295, 33.602053],
         [-112.023641, 33.626367]
-    ])->send();
+    ])
+$response = $request->send();
+$status = $response->getStatus(); // "Ok"
+
+// Routes are returned as StdObjects based on
+// [https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md]
+$routes = $response->getRoutes(); // Returns an array of routes
+$routes = $response->getFirstRoutes(); // Returns the first/primary route
 
 // you can override the default options for each supported service
 $response = LaraOsrmFacade::drivingDistance()
