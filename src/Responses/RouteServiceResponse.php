@@ -9,33 +9,33 @@ class RouteServiceResponse extends AbstractResponse
 {
     private $routes;
 
-    public function getStatus()
-    {
-        return $this->responseJson->code;
-    }
-
     public function getWaypoints()
     {
-        return $this->responseJson->waypoints;
+        return $this->responseData->waypoints;
     }
 
     public function getRoutes()
     {
         if (!isset($this->routes)) {
-            $routes = [];
-            foreach ($this->responseJson->routes as $route) {
-                $routes[] = new Route($route);
+            $this->routes = [];
+            foreach ($this->responseData->routes as $route) {
+                $this->routes[] = new Route($route);
             }
-            $this->routes = $routes;
         }
         return $this->routes;
     }
 
+    /**
+     * Get the "first" route if there are multiple. This should be the
+     * most recommended route (unless you've specified some other options).
+     *
+     * @return \Dmgctrlr\LaraOsrm\Models\Route;
+     */
     public function getFirstRoute()
     {
         $routes = $this->getRoutes();
-        if (isset($routes[0])) {
-            $this->getRoutes()[0];
+        if (isset($routes[0]) && $routes[0] instanceof \Dmgctrlr\LaraOsrm\Models\Route) {
+            return $routes[0];
         }
         throw new \Exception('No routes found');
     }
