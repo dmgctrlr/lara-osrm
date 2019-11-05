@@ -13,6 +13,12 @@ class Route
 
     public function getDistance($unit = 'km')
     {
+        if (!isset($this->routeData)) {
+            throw new \Exception('I do not have any routeData');
+        }
+        if (!is_int($this->routeData->distance)) {
+            throw new \Exception('I do not have a distance in my route routeData');
+        }
         switch (strtolower($unit)) {
             case 'km':
                 return $this->routeData->distance;

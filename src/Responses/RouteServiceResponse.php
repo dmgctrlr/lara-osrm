@@ -8,6 +8,7 @@ use Dmgctrlr\LaraOsrm\Models\Route;
 class RouteServiceResponse extends AbstractResponse
 {
     private $routes;
+    const STATUS_NO_ROUTE = 'NoRoute'; // No route found.
 
     public function getWaypoints()
     {
