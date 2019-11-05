@@ -11,7 +11,12 @@ All notable changes to `lara-osrm` will be documented in this file
 - Added ability to override settings on object creation
 - Fixed example code in README.md
 - Don't set defaults if they don't need to be set (let OSRM Server handle defaults)
- - Removed invalid attributes from phpunit.xml.dist
+- Removed invalid attributes from phpunit.xml.dist
+- Replaced using arrays for coordinates with LatLng object
+- Added getDistance() method to Route model
+- Added Demo server for running tests, with option to override
+- Added Status Code constants and methods for error checking
+- A few other bits of refactoring.
 
 ## 1.0.0 - 201X-XX-XX
 

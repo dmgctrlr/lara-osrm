@@ -59,8 +59,8 @@ class RouteServiceTest extends TestCase
             $response = $routeRequest->send();
         } catch (ClientException $e) {
             $this->assertEquals(
-                $e->getResponse()->getStatusCode(),
-                400
+                422,
+                $e->getResponse()->getStatusCode()
             );
         }
     }
