@@ -16,7 +16,7 @@ class Route
         if (!isset($this->routeData)) {
             throw new \Exception('I do not have any routeData');
         }
-        if (!is_int($this->routeData->distance)) {
+        if (!is_float($this->routeData->distance)) {
             throw new \Exception('I do not have a distance in my route routeData');
         }
         switch (strtolower($unit)) {
