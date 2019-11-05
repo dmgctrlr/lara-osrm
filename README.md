@@ -15,6 +15,19 @@ You can install the package via composer:
 composer require dmgctrlr/lara-osrm
 ```
 
+Publish the config file (config/lara-osrm.config)
+
+```bash
+php artisan vendor:publish --tag="config" --provider="Dmgctrlr\LaraOsrm\LaraOsrmServiceProvider"
+```
+
+You can overwrite the defaults in your `.env` file too:
+```dotenv
+OSRM_HOST=localhost
+OSRM_PORT=5000
+OSRM_VERSION=v1
+```
+
 ## Usage
 
 ## Route Calculation
@@ -25,18 +38,22 @@ use Dmgctrlr\LaraOsrm\Models\LatLng;
 
 $request = new RouteServiceRequest();
 $request->setCoordinates([
-        new LatLng(33.712053, -112.068195),
-        new LatLng(33.602053, -112.065295),
-        new LatLng(33.626367, -112.023641)
-    ])
+    new LatLng(33.712053, -112.068195),
+    new LatLng(33.602053, -112.065295),
+    new LatLng(33.626367, -112.023641)
+]);
+// `send()` returns a Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse (since we made a RouteServiceRequest).
 $response = $request->send();
 $status = $response->getStatus(); // "Ok"
 $status = $response->getMessage(); // Mostly useful for getting the error message if there's a problem.
 
-// Routes are returned as StdObjects based on
-// [https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md]
-$routes = $response->getRoutes(); // Returns an array of routes
-$routes = $response->getFirstRoute(); // Returns the first/primary route
+$routes = $response->getRoutes(); // Returns an array of Dmgctrlr\LaraOsrm\Models\Route
+
+// @var Dmgctrlr\LaraOsrm\Models\Route $recommendedRoute **/
+$recommendedRoute = $response->getFirstRoute(); // Returns the first/primary route
+$recommendedRoute->getDistance(); // Returns in meters
+$recommendedRoute->getDistance('km'); // Returns in kilometers
+$recommendedRoute->getDistance('miles', 4); // Returns in milesr ronded to 4 decimal places
 
 // you can override the default options for each supported service
 $response = LaraOsrmFacade::drivingDistance()
