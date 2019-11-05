@@ -58,8 +58,8 @@ By default the tests will use the OSRM demo server, to use your own or another
 server `cp phpunit.xml.dist phpunit.xml` and edit the environment variables.
 
 If you're getting errors about a route not having a distance, and you're using
-your own server - check the server is properly configured and is returning non-zero
-distances.
+your own server - check the server is properly configured and is not returning
+non-zero distances. For these tests you must have the "berlin" area installed.
 
 ``` bash
 composer test
