@@ -74,7 +74,8 @@ abstract class AbstractRequest
         }
         $coordinates = [];
         foreach ($this->coordinates as $coordinate) {
-            $coordinates[] = "$coordinate[0],$coordinate[1]";
+            // Note the API wants Longitude then Latitude
+            $coordinates[] = $coordinate->getLng() . ',' . $coordinate->getLat();
         }
 
         return implode(';', $coordinates);

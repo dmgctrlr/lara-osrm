@@ -11,7 +11,7 @@ class Route
         $this->routeData = $routeData;
     }
 
-    public function getDistance($unit = 'km')
+    public function getDistance($unit = 'km', $round = 2)
     {
         if (!isset($this->routeData)) {
             throw new \Exception('I do not have any routeData');
@@ -21,9 +21,9 @@ class Route
         }
         switch (strtolower($unit)) {
             case 'km':
-                return $this->routeData->distance;
+                return round($this->routeData->distance, $round);
             case 'miles':
-                return $this->routeData->distance * 0.6213712;
+                return round($this->routeData->distance * 0.6213712, $round);
             default:
                 throw new \Exception('Invalid unit passed to getDistance:' . $unit);
         }

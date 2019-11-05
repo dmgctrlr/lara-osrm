@@ -4,6 +4,7 @@ namespace Dmgctrlr\LaraOsrm\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Dmgctrlr\LaraOsrm\RouteServiceRequest;
+use Dmgctrlr\LaraOsrm\Models\LatLng;
 use GuzzleHttp\Exception\ClientException;
 
 class RouteServiceTest extends TestCase
@@ -34,9 +35,9 @@ class RouteServiceTest extends TestCase
     {
         $routeRequest = new RouteServiceRequest($this->getOsrmConfig());
         $routeRequest->setCoordinates([
-            [13.428395, 52.537307],
-            [13.452084, 52.509420],
-            [13.401272, 52.511718]
+            new LatLng(52.537307, 13.428395),
+            new LatLng(52.509420, 13.452084),
+            new LatLng(52.51171, 13.401272),
         ]);
         $this->delayBetweenSending();
         $response = $routeRequest->send();
@@ -51,7 +52,7 @@ class RouteServiceTest extends TestCase
     {
         $routeRequest = new RouteServiceRequest($this->getOsrmConfig());
         $routeRequest->setCoordinates([
-            [13.428395, 52.537307],
+            new LatLng(52.537307, 13.428395),
         ]);
         try {
             $this->delayBetweenSending();
@@ -72,22 +73,27 @@ class RouteServiceTest extends TestCase
     {
         $routeRequest = new RouteServiceRequest($this->getOsrmConfig());
         $routeRequest->setCoordinates([
-            [13.358583, 52.514707],
-            [13.451166, 52.509881],
+            new LatLng(52.5152238, 13.4590997),
+            new LatLng(52.5098546, 13.5412887),
         ]);
         $this->delayBetweenSending();
         $response = $routeRequest->send();
         /* @var $route \Dmgctrlr\LaraOsrm\Models\Route */
         $route = $response->getFirstRoute();
         $this->assertEquals(
-            '11',
+            '5.6',
             $route->getDistance(),
             'Get the distance in the default unit (km)'
         );
         $this->assertEquals(
-            '12',
+            '3.48',
             $route->getDistance('miles'),
             'Get the same distance in miles'
+        );
+        $this->assertEquals(
+            '3.480',
+            $route->getDistance('miles', 3),
+            'Get the same distance in miles with 3 points of precision'
         );
     }
 }
