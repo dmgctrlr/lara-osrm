@@ -81,17 +81,22 @@ class RouteServiceTest extends TestCase
         /* @var $route \Dmgctrlr\LaraOsrm\Models\Route */
         $route = $response->getFirstRoute();
         $this->assertEquals(
-            '5.6',
+            '5621.50',
             $route->getDistance(),
-            'Get the distance in the default unit (km)'
+            'Get the distance in meters'
         );
         $this->assertEquals(
-            '3.48',
+            '5.62',
+            $route->getDistance('km'),
+            'Get the distance in kilometers'
+        );
+        $this->assertEquals(
+            '3.49',
             $route->getDistance('miles'),
             'Get the same distance in miles'
         );
         $this->assertEquals(
-            '3.480',
+            '3.493',
             $route->getDistance('miles', 3),
             'Get the same distance in miles with 3 points of precision'
         );
