@@ -19,6 +19,15 @@ abstract class AbstractResponse
     public function __construct(GuzzleResponse $response)
     {
         $this->response = $response;
-        $this->responseJson = \GuzzleHttp\json_decode($response->getBody());
+        $this->responseJson = \GuzzleHttp\json_decode((string) $response->getBody());
+    }
+
+    public function dumpResponse($echo = true)
+    {
+        if ($echo) {
+            var_export($this->responseJson);
+        } else {
+            var_export($this->responseJson, true);
+        }
     }
 }

@@ -8,7 +8,8 @@ use Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse;
 
 abstract class AbstractRequest
 {
-    private $url;
+    private $host;
+    private $port;
     /**
      * @var Client
      */
@@ -19,20 +20,38 @@ abstract class AbstractRequest
      */
     public function __construct($config = [])
     {
-        $host = isset($config['host']) ? $config['host'] : config('lara-osrm.host', 'router.project-osrm.org');
-        $port = isset($config['port']) ? $config['port'] : config('lara-osrm.port', '80');
-        $this->url = $host . ':' . $port . '/';
+        $this->host = isset($config['host']) ? $config['host'] : config('lara-osrm.host', 'router.project-osrm.org');
+        $this->port = isset($config['port']) ? $config['port'] : config('lara-osrm.port', '80');
         $this->client = new Client();
     }
 
     public function send()
     {
-        $this->url .= $this->buildBaseURL() . '/' . $this->buildCoordinatesURL() . '?' . $this->buildOptionsURL();
-        $curlResponse = $this->client->get($this->url, ['connect_timeout' => 3.14]);
+        $url = $this->host
+            . ':'
+            . $this->port
+            . '/'
+            . $this->buildBaseURL()
+            . '/'
+            . $this->buildCoordinatesURL()
+            . '?'
+            . $this->buildOptionsURL();
+
+        $curlResponse = $this->client->get($url, ['connect_timeout' => 3.14]);
+        if ($curlResponse->getStatusCode() !== 200) {
+            throw new \Exception('API response was not 200');
+        }
         switch ($this->service) {
             case 'route':
-                return new RouteServiceResponse($curlResponse);
+                $response = new RouteServiceResponse($curlResponse);
+                break;
+            default:
+                throw new \Exception('I cannot handle this service type yet: ' . $this->service);
         }
+        if ($response->isError()) {
+            throw new \Exception($response->getMessage());
+        }
+        return $response;
     }
 
     /**
