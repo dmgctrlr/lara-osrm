@@ -5,6 +5,7 @@ namespace Dmgctrlr\LaraOsrm;
 use GuzzleHttp\Client;
 
 use Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse;
+use Dmgctrlr\LaraOsrm\Responses\TripServiceResponse;
 
 abstract class AbstractRequest
 {
@@ -45,11 +46,11 @@ abstract class AbstractRequest
             case 'route':
                 $response = new RouteServiceResponse($curlResponse);
                 break;
+            case 'trip':
+                $response = new TripServiceResponse($curlResponse);
+                break;
             default:
                 throw new \Exception('I cannot handle this service type yet: ' . $this->service);
-        }
-        if ($response->isError()) {
-            throw new \Exception($response->getMessage());
         }
         return $response;
     }

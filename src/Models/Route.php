@@ -6,7 +6,7 @@ class Route
 {
     protected $routeData;
 
-    public function __construct(StdObj $routeData)
+    public function __construct(\StdClass $routeData)
     {
         $this->routeData = $routeData;
     }
@@ -14,10 +14,10 @@ class Route
     /**
      * Access the raw route data, use this if a method for what you need doesn't
      * exist yet.
-     * The returned StdObject is based on this:
+     * The returned StdClass is based on this:
      * https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md
      *
-     * @return StdObject
+     * @return StdClass
      */
     public function getRouteData()
     {
