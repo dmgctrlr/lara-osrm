@@ -4,6 +4,9 @@ All notable changes to `lara-osrm` will be documented in this file
 
 ## Unreleased Changes
 
+- Breaking: Pass LatLng objects, not arrays to set coordinated.
+- Breaking: $request->send() returns a Response object, not a Guzzle object.
+- Breaking: Only Route service has been refactored - others don't work.
 - Added support for Laravel 6
 - Added first tests
 - Began abstracting Responses (instead of returning the Guzzle\Response)
