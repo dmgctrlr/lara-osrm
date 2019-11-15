@@ -28,15 +28,7 @@ abstract class AbstractRequest
 
     public function send()
     {
-        $url = $this->host
-            . ':'
-            . $this->port
-            . '/'
-            . $this->buildBaseURL()
-            . '/'
-            . $this->buildCoordinatesURL()
-            . '?'
-            . $this->buildOptionsURL();
+        $url = $this->getUrl();
 
         $curlResponse = $this->client->get($url, ['connect_timeout' => 3.14]);
         if ($curlResponse->getStatusCode() !== 200) {
@@ -53,6 +45,22 @@ abstract class AbstractRequest
                 throw new \Exception('I cannot handle this service type yet: ' . $this->service);
         }
         return $response;
+    }
+
+    public function getUrl()
+    {
+        $url = $this->host
+            . ':'
+            . $this->port
+            . '/'
+            . $this->buildBaseURL()
+            . '/'
+            . $this->buildCoordinatesURL();
+        $optionsUrl = $this->buildOptionsURL();
+        if (!empty($optionsUrl)) {
+            $url = $url . '?' . $optionsUrl;
+        }
+        return $url;
     }
 
     /**
