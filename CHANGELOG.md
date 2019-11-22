@@ -2,7 +2,7 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
-## Unreleased Changes
+## 1.0 2019-11
 
 - Breaking: Pass LatLng objects, not arrays to set coordinated.
 - Breaking: $request->send() returns a Response object, not a Guzzle object.
@@ -21,6 +21,6 @@ All notable changes to `lara-osrm` will be documented in this file
 - Added Status Code constants and methods for error checking
 - A few other bits of refactoring.
 
-## 1.0.0 - 201X-XX-XX
+## 0.1.0 and lower.
 
-- initial release
+ - See commits.
