@@ -1,3 +1,4 @@
+phpunit.xml
 build
 composer.lock
 docs
