@@ -2,6 +2,8 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+## [UNRELEASED]
+ - Removed unnecessary dependency orchestra/testbench
 ## 1.0 2019-11
 
 - Breaking: Pass LatLng objects, not arrays to set coordinated.
