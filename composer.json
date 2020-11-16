@@ -17,12 +17,12 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "guzzlehttp/guzzle": "^7",
-        "illuminate/support": "^8"
+        "php": "^7.1",
+        "guzzlehttp/guzzle": "^6.3||^7",
+        "illuminate/support": "5.7.*||^6||^7||^8"
     },
     "require-dev": {
-        "orchestra/testbench": "6.x",
+        "orchestra/testbench": "^3.7||^5||^6",
         "phpunit/phpunit": "^9.0"
     },
     "autoload": {
@@ -38,7 +38,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
