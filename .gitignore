@@ -8,3 +8,4 @@ coverage
 .env
 .DS_Store
 .editorconfig
+.phpunit.results.cache
