@@ -2,11 +2,9 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
-## [UNRELEASED]
+## 1.1 2020-11
 
-- Laravel 8 compatibility
-- Breaking: Drop support for Laravel < 8
-- Breaking: Now requires PHP 7.2
+- Added Laravel 7 and 8 compatibility
 - Update Illuminate/Support, Guzzle, TestBench and PHP Unit to the latest versions.
 
 ## 1.0 2019-11
