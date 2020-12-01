@@ -2,6 +2,7 @@
 
 namespace Dmgctrlr\LaraOsrm;
 
+use Dmgctrlr\LaraOsrm\Responses\MatchServiceResponse;
 use GuzzleHttp\Client;
 
 use Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse;
@@ -35,6 +36,9 @@ abstract class AbstractRequest
             throw new \Exception('API response was not 200');
         }
         switch ($this->service) {
+            case 'match':
+                $response = new MatchServiceResponse($curlResponse);
+                break;
             case 'route':
                 $response = new RouteServiceResponse($curlResponse);
                 break;

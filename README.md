@@ -36,6 +36,7 @@ There are a few ways to get the request service, depending on your preferences a
 ### Direct Creation
 You can create them directly - passing an array (including 'host' and 'port' keys if you want to overwrite reading from `config()`
 ``` php
+// Create a ServiceRequest based on the service you want: RouteServiceRequest, MatchServiceRequest, TripServiceRequest
 use Dmgctrlr\LaraOsrm\RouteServiceRequest;
 
 // Pass config to overwrite the defaults and your laravel config/lara-osrm.php
@@ -93,6 +94,9 @@ class Test extends Command
      */
     public function handle(LaraOsrm $osrm)
     {
+        // Create your ServiceRequest based on the method you call
+        // e.g. $osrm->route() creates a RouteServiceRequest
+        // $osrm->match(), $osrm->trip() etc.
         $request = $osrm->route();
         $request->setCoordinates([
             new LatLng(33.712053, -112.068195),
@@ -107,6 +111,7 @@ class Test extends Command
 ```
 
 ## Route Calculation
+See: http://project-osrm.org/docs/v5.22.0/api/#route-service
 ``` php
 use Dmgctrlr\LaraOsrm\Models\LatLng;
 
@@ -118,7 +123,7 @@ $request->setCoordinates([
 ]);
 
 // you can override the default options for each supported service
-$response = $request->setOptions('steps', 'annotations', ['overview' => 'full'], ['geometries' => 'geojson']);
+$request->setOptions('steps', 'annotations', ['overview' => 'full'], ['geometries' => 'geojson']);
 
 // `send()` returns a Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse (since we made a RouteServiceRequest).
 $response = $request->send();
@@ -129,6 +134,35 @@ $routes = $response->getRoutes(); // Returns an array of Dmgctrlr\LaraOsrm\Model
 
 // @var Dmgctrlr\LaraOsrm\Models\Route $recommendedRoute **/
 $recommendedRoute = $response->getFirstRoute(); // Returns the first/primary route
+$recommendedRoute->getDistance(); // Returns in meters
+$recommendedRoute->getDistance('km'); // Returns in kilometers
+$recommendedRoute->getDistance('miles', 4); // Returns in miles ronded to 4 decimal places
+
+```
+
+## Match Service
+See: http://project-osrm.org/docs/v5.22.0/api/#match-service
+``` php
+use Dmgctrlr\LaraOsrm\Models\LatLng;
+
+// See (Getting the Request Service)[#getting-the-request-service] to get your $request
+$request->setCoordinates([
+    new LatLng(33.712053, -112.068195),
+    new LatLng(33.626367, -112.023641)
+]);
+
+// you can override the default options for each supported service
+$request->setOptions('steps', 'annotations', ['overview' => 'full'], ['geometries' => 'geojson']);
+
+// `send()` returns a Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse (since we made a RouteServiceRequest).
+$response = $request->send();
+$status = $response->getStatus(); // "Ok"
+$status = $response->getMessage(); // Mostly useful for getting the error message if there's a problem.
+
+$routes = $response->getTracepoints(); // Returns an array of Dmgctrlr\LaraOsrm\Models\LatLng
+
+// @var Dmgctrlr\LaraOsrm\Models\Route $recommendedRoute **/
+$recommendedRoute = $response->getFirstRoute(); // Returns the first/primary matching.
 $recommendedRoute->getDistance(); // Returns in meters
 $recommendedRoute->getDistance('km'); // Returns in kilometers
 $recommendedRoute->getDistance('miles', 4); // Returns in milesr ronded to 4 decimal places

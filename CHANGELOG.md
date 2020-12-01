@@ -2,6 +2,9 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+## 1.2 2020-12-01
+
+- Added MatchServiceRequest to enable Match Requests.
 ## 1.1 2020-11
 
 - Added Laravel 7 and 8 compatibility
