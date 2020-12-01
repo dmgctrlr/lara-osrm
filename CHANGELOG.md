@@ -2,7 +2,7 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
-## [UNRELEASED]
+## 1.2 2020-12-01
 
 - Added MatchServiceRequest to enable Match Requests.
 ## 1.1 2020-11
