@@ -2,6 +2,13 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+## [Unreleased]
+
+- Reintroduced $options array on requests (fixing the setOptions() method)
+- Defaulted options to null - so the server default will be used rather than this package versions.
+- Removed 'timestamps' from MatchServiecRequest (doesn't appear to be supported as an option on OSRM)
+- Added 'annotations' option to MatchServiceRequest
+
 ## 1.2 2020-12-01
 
 - Added MatchServiceRequest to enable Match Requests.
