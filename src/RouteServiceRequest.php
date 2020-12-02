@@ -14,5 +14,12 @@ class RouteServiceRequest extends BaseServiceRequest
      * These are the default OSRM parameters for the route service
      * @var array
      */
-    public $options = [];
+    public $options = [
+        'alternatives' => null,
+        'steps'        => null,
+        'annotations'  => null,
+        'geometries'   => null,
+        'overview'     => null,
+    ];
+
 }

@@ -28,6 +28,7 @@ class MatchServiceTest extends TestCase
             'port' => env('OSRM_PORT', '80'),
         ];
     }
+
     /**
      * Check we can make a request, and get an Ok back.
      */
@@ -61,8 +62,62 @@ class MatchServiceTest extends TestCase
                 400,
                 $e->getResponse()->getStatusCode()
             );
-            // return true;
+            return true;
         }
-        $this->assertFalse(true, 'MatchServiceRequest did not throw an error when we sent an invalid packet.');
+        $this->assertFalse(true, 'MatchServiceRequest did not throw an error when we sent an invalid query.');
+    }
+
+    /**
+     * Check we can make a request, and get an Ok back.
+     */
+    public function testUrlGeneration()
+    {
+        $matchRequest = new MatchServiceRequest($this->getOsrmConfig());
+        $matchRequest->setCoordinates([
+            new LatLng(51.618060, -0.239197),
+            new LatLng(51.617594, -0.239781),
+        ]);
+        $this->assertEquals(
+            'router.project-osrm.org:80/match/v1/driving/-0.239197,51.61806;-0.239781,51.617594',
+            $matchRequest->getUrl()
+        );
+
+        $matchRequest->addOption('steps');
+        $this->assertEquals(
+            'router.project-osrm.org:80/match/v1/driving/-0.239197,51.61806;-0.239781,51.617594?steps=true',
+            $matchRequest->getUrl(),
+            'adding a simple true/false setting'
+        );
+
+        $matchRequest->addOption(['steps' => null]);
+        $this->assertEquals(
+            'router.project-osrm.org:80/match/v1/driving/-0.239197,51.61806;-0.239781,51.617594',
+            $matchRequest->getUrl(),
+            'remove a true/false setting'
+        );
+
+        // Change the coordinates
+        $matchRequest->setCoordinates([
+            new LatLng(52.618060, -11.238197),
+            new LatLng(52.617594, -11.238781),
+        ]);
+        $matchRequest->addOption(['steps' => null]);
+        $this->assertEquals(
+            'router.project-osrm.org:80/match/v1/driving/-11.238197,52.61806;-11.238781,52.617594',
+            $matchRequest->getUrl(),
+            'changing the coordinates'
+        );
+
+        $matchRequest->setOptions(
+            'steps', // This should add steps=true
+            ['overview' => 'simplified'], // This should add overview=simplified
+        );
+
+        $this->assertEquals(
+            'router.project-osrm.org:80/match/v1/driving/-11.238197,52.61806;-11.238781,52.617594?steps=true&overview=simplified',
+            $matchRequest->getUrl(),
+            'set multiple options'
+        );
+
     }
 }

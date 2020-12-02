@@ -22,14 +22,14 @@ class MatchServiceRequest extends BaseServiceRequest
      * These are the default OSRM parameters for the match service
      * @var array
      */
-    public $options = [];
-
-    public function setTimestamps(...$options): parent
-    {
-        $this->options['timestamps'] = implode(';', $options[0] );
-
-        return $this;
-    }
+    public $options = [
+        'steps'       => null,
+        'geometries'  => null, // polyline, polyline6 or geojson
+        'annotations' => null,
+        'overview'    => null, // simplified, full or false
+        'annotations'  => null,
+        'radiuses'    => null
+    ];
 
     public function setRadiuses(...$options): parent
     {

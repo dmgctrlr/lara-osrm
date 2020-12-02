@@ -123,7 +123,9 @@ $request->setCoordinates([
 ]);
 
 // you can override the default options for each supported service
-$request->setOptions('steps', 'annotations', ['overview' => 'full'], ['geometries' => 'geojson']);
+// This is the same as calling setOptions() multiple times. Pass each option
+// a parameter, use an array if you want to set the value to something other than "true"
+$request->setOptions('steps', [ 'annotations' => false ], ['overview' => 'full'], ['geometries' => 'geojson']);
 
 // `send()` returns a Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse (since we made a RouteServiceRequest).
 $response = $request->send();
