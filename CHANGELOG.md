@@ -2,6 +2,10 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+## 2.0 2020-12-02
+
+- Dropped support for PHP < 7.3
+- Added Travis testing for PHP 8
 ## 1.3 2020-12-02
 
 - Reintroduced $options array on requests (fixing the setOptions() method)
