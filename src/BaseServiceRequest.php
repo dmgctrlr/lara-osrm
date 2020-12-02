@@ -64,11 +64,11 @@ class BaseServiceRequest extends AbstractRequest
     public function addOption($option): void
     {
         if (is_array($option)) {
-            if (isset($this->options[array_keys($option)[0]])) {
+            if (array_key_exists(array_keys($option)[0], $this->options)) {
                 $this->options[array_keys($option)[0]] = array_values($option)[0];
             }
         } else {
-            if (isset($this->options[$option])) {
+            if (array_key_exists($option, $this->options)) {
                 $this->options[$option] = 'true';
             }
         }

@@ -15,11 +15,11 @@ class RouteServiceRequest extends BaseServiceRequest
      * @var array
      */
     public $options = [
-        'alternatives' => 'false',
-        'steps'        => 'false',
-        'annotations'  => 'false',
-        'geometries'   => 'polyline', // polyline, polyline6 or geojson
-        'overview'     => 'simplified', // simplified, full or false
+        'alternatives' => null,
+        'steps'        => null,
+        'annotations'  => null,
+        'geometries'   => null,
+        'overview'     => null,
     ];
 
 }

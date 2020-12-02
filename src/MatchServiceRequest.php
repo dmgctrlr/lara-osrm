@@ -23,20 +23,13 @@ class MatchServiceRequest extends BaseServiceRequest
      * @var array
      */
     public $options = [
-        'steps'       => 'false',
-        'geometries'  => 'polyline', // polyline, polyline6 or geojson
-        'annotations' => 'false',
-        'overview'    => 'simplified', // simplified, full or false
-        'timestamps'  => 'false',
-        'radiuses'    => 'false',
+        'steps'       => null,
+        'geometries'  => null, // polyline, polyline6 or geojson
+        'annotations' => null,
+        'overview'    => null, // simplified, full or false
+        'annotations'  => null,
+        'radiuses'    => null
     ];
-
-    public function setTimestamps(...$options): parent
-    {
-        $this->options['timestamps'] = implode(';', $options[0] );
-
-        return $this;
-    }
 
     public function setRadiuses(...$options): parent
     {
