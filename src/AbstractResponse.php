@@ -25,11 +25,18 @@ abstract class AbstractResponse
 
     /**
      * AbstractRequest constructor.
+     * 
+     * @param $response GuzzleResponse|array
      */
-    public function __construct(GuzzleResponse $response)
+    public function __construct($response)
     {
+        if (is_a($response, GuzzleResponse::class)) {
+            $responseData = \GuzzleHttp\json_decode((string) $response->getBody());
+        } else {
+            $responseData = $response;
+        }
         $this->response = $response;
-        $this->responseData = \GuzzleHttp\json_decode((string) $response->getBody());
+        $this->responseData = $responseData;
     }
     public function getStatus()
     {
@@ -58,5 +65,10 @@ abstract class AbstractResponse
         } else {
             var_export($this->responseData, true);
         }
+    }
+
+    public function getResponseData()
+    {
+        return $this->responseData;
     }
 }
