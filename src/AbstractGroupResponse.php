@@ -41,7 +41,7 @@ abstract class AbstractGroupResponse
         $linkedResponses = collect([
             $this->responses[0]
         ]);
-        for ($i = 1; $i < count($this->responses) - 1; $i++) {
+        for ($i = 1; $i < count($this->responses); $i++) {
             $previousResponse = $linkedResponses->last();
             if (!is_a($previousResponse, AbstractResponse::class)) {
                 throw new \Exception('$previousResponse on iteration ' . $i . ' is not a Response object but is a ' . get_class($previousResponse));
@@ -50,7 +50,7 @@ abstract class AbstractGroupResponse
             if (!is_a($thisResponse, AbstractResponse::class)) {
                 throw new \Exception('Encountered response #' . $i . ' which is not a Response object but is a ' . get_class($thisResponse));
             }
-            $nextResponse = $this->responses[$i + 1] ?: false;
+
             /**
              * Make a Link response which routes from the last coordinate
              * of the previous response, to the first of the next.
