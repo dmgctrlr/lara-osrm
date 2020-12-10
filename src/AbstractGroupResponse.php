@@ -73,6 +73,7 @@ abstract class AbstractGroupResponse
 
     private function mergeResponses($responses)
     {
+
         $this->responseData = null;
         foreach ($responses as $response) {
             $responseData = $response->getResponseData();
@@ -86,7 +87,7 @@ abstract class AbstractGroupResponse
         }
 
         $responseName = get_class($this->responses[0]);
-        $response = new RouteServiceResponse($this->responseData);
+        $response = new $responseName($this->responseData);
         return $response;
     }
 
