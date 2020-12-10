@@ -242,4 +242,21 @@ class RouteServiceTest extends TestCase
         $this->expectExceptionMessage('sendChunk only works when geometries=geogson');
         $routeRequest->sendChunk();
     }
+    /**
+     * Check that the adjustChunkSize method always returns a good number;
+     */
+    public function testAdjustChunkSize()
+    {
+        $request = new RouteServiceRequest($this->getOsrmConfig());
+
+        // We ask for X waypoints in chunks of Y
+        // 100 waypoints in chunks of 10
+        $this->assertEquals(10, $request->adjustChunkSize(100, 10), 'incorrectly adjusting 100 waypoints in chunks of 10');
+        $this->assertEquals(3, $request->adjustChunkSize(9, 3), 'incorrectly adjusting 9 waypoints in chunks of 3');
+        $this->assertEquals(4, $request->adjustChunkSize(10, 3), 'incorrectly adjusting 10 waypoints in chunks of 3');
+        $this->assertEquals(16, $request->adjustChunkSize(31, 15), 'incorrectly adjusting 31 waypoints in chunks of 15');
+        $this->assertEquals(100, $request->adjustChunkSize(100, 99), 'incorrectly adjusting 100 waypoints in chunks of 99');
+        $this->assertEquals(5, $request->adjustChunkSize(15, 5), 'incorrectly adjusting 15 waypoints in chunks of 5');
+        
+    }
 }

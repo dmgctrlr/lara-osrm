@@ -94,11 +94,12 @@ class BaseServiceRequest extends AbstractRequest
         }
         $groupResponse = new RouteServiceGroupResponse($this);
 
+        $chunkSize = $this->adjustChunkSize(count($this->coordinates), $chunkSize);
+
         $this->remainingCoordinates = collect($this->coordinates);
         $this->coordinates = [];
-
-        foreach ($this->remainingCoordinates->chunk($chunkSize)->all() as $coordinates) {
-            $this->setCoordinates($coordinates->all());
+        foreach ($this->remainingCoordinates->chunk($chunkSize)->all() as $theseCoordinates) {
+            $this->setCoordinates($theseCoordinates->all());
             $response = $this->send();
             if ($response->isError()) {
                 throw new \Exception($response->getMessage());
@@ -107,6 +108,24 @@ class BaseServiceRequest extends AbstractRequest
         };
 
         return $groupResponse->stitch();
+    }
+    /**
+     * Given the requested chunk size and number of waypoints, tweak the chunk size
+     * if required because every chunk needs at least 2 waypoints.
+     * */
+    public function adjustChunkSize(int $waypointCount, int $chunkSize)
+    {
+        if ($chunkSize >= $waypointCount) {
+            return $chunkSize;
+        }
+        // Every chunk needs at least 2 waypoints. A chunk with 0 waypoints won't
+        // do anything so 0 is OK.
+        if ($waypointCount % $chunkSize > 0 && $waypointCount % $chunkSize < 2) {
+            $chunkSize++;
+            // We're only guessing that adding 1 helps, so check (and add another 1 if necessary)
+            return $this->adjustChunkSize($waypointCount, $chunkSize);
+        }
+        return $chunkSize;
     }
 
 }
