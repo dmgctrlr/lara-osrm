@@ -27,7 +27,6 @@ abstract class AbstractGroupResponse
     public function addResponse(RouteServiceResponse $response): self
     {
         $this->responses[] = $response;
-        echo "Added response #" . count($this->responses) . "\n";
         return $this;
     }
 
@@ -93,7 +92,21 @@ abstract class AbstractGroupResponse
 
     private function mergeWaypoints($waypoints)
     {
-        echo "Waypoints: " . count($this->responseData->waypoints) . "\n";
+        $lastWaypoint = collect($this->responseData->waypoints)->last();
+        $firstNewWaypoint = $waypoints[0];
+
+        // If the first waypoint we've been given is the same as the
+        // last one - remove one of them. This is a symptom of our LinkResponses
+        // where we duplicate the first/last.
+        if ($firstNewWaypoint->location[0] == $lastWaypoint->location[0] && $firstNewWaypoint->location[1] == $lastWaypoint->location[1]) {
+            // If one of the waypoints has a distance of 0, remove that one because it means
+            // it's either the first/last (and we're connecting)
+            if ($lastWaypoint->distance == 0) {
+                array_pop($this->responseData->waypoints);
+            } else {
+                array_shift($waypoints);
+            }
+        }
 
         // Merge the Waypoints if we have some.
         foreach ($waypoints as $waypoint) {

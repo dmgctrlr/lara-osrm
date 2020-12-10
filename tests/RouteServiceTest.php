@@ -129,7 +129,7 @@ class RouteServiceTest extends TestCase
     {
         file_put_contents('w:/www/inoria/public/output-normal.json', '');
         file_put_contents('w:/www/inoria/public/output-chunked.json', '');
-        $coordinates = [
+        $coordinates = [ // 32 known coordinates
             new LatLng(51.592862, -0.16597),
             new LatLng(51.592847, -0.165962),
             new LatLng(51.593093, -0.164624),
@@ -176,7 +176,7 @@ class RouteServiceTest extends TestCase
         $normalResponse = $normalRouteRequest->send();
         $this->delayBetweenSending();
         /** @var RouteServiceResponse $chunkedResponse */
-        $chunkedResponse = $chunkedRouteRequest->sendChunk(9);
+        $chunkedResponse = $chunkedRouteRequest->sendChunk(10);
 
         file_put_contents('w:/www/inoria/public/output-normal.json', json_encode($normalResponse->getResponseData()->waypoints, JSON_PRETTY_PRINT));
         file_put_contents('w:/www/inoria/public/output-chunked.json', json_encode($chunkedResponse->getResponseData()->waypoints, JSON_PRETTY_PRINT));
