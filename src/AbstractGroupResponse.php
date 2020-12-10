@@ -127,7 +127,6 @@ abstract class AbstractGroupResponse
                 }
 
                 foreach ($route->geometry->coordinates as $coordinate) {
-                    // $coordinate[] = 'chunk_id_' . $chunkId;
                     array_push($this->responseData->routes[$routeId]->geometry->coordinates, $coordinate);
                 }
             }
