@@ -116,6 +116,7 @@ class RouteServiceTest extends TestCase
         }
 
         $routeRequest = new RouteServiceRequest($this->getOsrmConfig());
+        $routeRequest->setOptions(['geometries' => 'geojson'], 'steps');
         $routeRequest->setCoordinates($coordinates);
         $this->delayBetweenSending();
         $response = $routeRequest->sendChunk();
@@ -239,8 +240,8 @@ class RouteServiceTest extends TestCase
     public function testSendChunkRequirements()
     {
         $routeRequest = new RouteServiceRequest($this->getOsrmConfig());
-        $routeRequest->setCoordinates([new LatLng(51.625226, -0.258437),  new LatLng(51.625226, -0.258437)]);
-        $this->expectExceptionMessage('sendChunk only works when geometries=geogson');
+        $routeRequest->setCoordinates([new LatLng(51.625227, -0.258438),  new LatLng(51.625226, -0.258437)]);
+        $this->expectExceptionMessage('sendChunk only works when geometries=geojson');
         $routeRequest->sendChunk();
     }
     /**
