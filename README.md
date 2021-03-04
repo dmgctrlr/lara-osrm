@@ -170,8 +170,22 @@ $recommendedRoute->getDistance('km'); // Returns in kilometers
 $recommendedRoute->getDistance('miles', 4); // Returns in milesr ronded to 4 decimal places
 
 ```
+## SendChunk - sending huge RouteServiceRequests
+*Note: This is an experimental feature, your contributions are welcome*
 
-### Testing
+If you want to a route request with more than a few hundred waypoints you'll run
+into URI length limits when the library sends a GET request to OSRM.
+
+To workaround that you can use `sendChunk()` - which is an *experimental* and incomplete
+attempt at breaking your huge request into smaller requests and combining them.
+
+To use `sendChunk()`:
+ * Read the SendChunk inline documentation (`src/BaseServiceRequest.php`)
+ * Confirm that sendChunk processes and returns the information you want (it doesn't process everything)
+ * Simply swap `send()` with `sendChunk()` on your RouteRequest object.
+ * Test to check that the return from `sendChunk()` is accurate enough for you.
+
+## Testing
 
 If you get errors like `Failed asserting that 429 matches expected 400.` or other mentions of
 code 429 then the server you're using is probably busy (or rate limiting you).
@@ -194,7 +208,7 @@ vendor/bin/phpunit
 ```
 
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
@@ -202,7 +216,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
 If you discover any security related issues, please email dm@mediavariance.com instead of using the issue tracker.
 

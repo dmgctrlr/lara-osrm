@@ -27,10 +27,10 @@ abstract class AbstractRequest
         $this->client = new Client();
     }
 
-    public function send()
+    public function send(): AbstractResponse
     {
         $url = $this->getUrl();
-
+        
         $curlResponse = $this->client->get($url, ['connect_timeout' => 3.14]);
         if ($curlResponse->getStatusCode() !== 200) {
             throw new \Exception('API response was not 200');

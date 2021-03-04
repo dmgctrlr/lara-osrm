@@ -2,6 +2,13 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+# Unreleased Changes
+
+ - None
+## 2.1 2021-03-04
+
+ - Add `sendChunk()` method to enable huge requests
+
 ## 2.0 2020-12-02
 
 Version 2 brings the library up to date with the latest dependencies, adds a few minor features,
