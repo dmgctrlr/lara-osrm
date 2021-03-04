@@ -185,6 +185,24 @@ To use `sendChunk()`:
  * Simply swap `send()` with `sendChunk()` on your RouteRequest object.
  * Test to check that the return from `sendChunk()` is accurate enough for you.
 
+## Known Limitations of `sendChunk()` (and how to help out)
+This is actually a list of things known to (probably) work. The crux of the complexity of
+sendChunk is in re-combining and stitching together the multiple requests we make.
+
+Ultimately we want to be able to perform a `send()` and a `sendChunk()` and get exactly
+the same result. We can do this by using a test list of Waypoints which is small enough
+for `send()` and use really small (e.g. 10 instead of 100) chunk sizes.
+
+The tests are currently all in: `RouteServiceTest::testSendChunkReturnsSameAsSend` and
+towards the bottom there are a bunch of commented out asserts. The next step
+is to make those asserts work, and then declare another bit of the result OK!.
+
+ - sendChunk only works with RouteServiceRequests
+ - sendChunk only works when 'geometries' is set to 'geojson'
+ - sendChunk only works for the 'waypoints' return value
+ - any other returned data shouldn't be trusted (it's probably only partial).
+ - sendChunk may not throw an error if you try and mis-use it. Please add error reporting.
+
 ## Testing
 
 If you get errors like `Failed asserting that 429 matches expected 400.` or other mentions of
