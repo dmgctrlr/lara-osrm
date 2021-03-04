@@ -85,7 +85,7 @@ class BaseServiceRequest extends AbstractRequest
      * - only returns a single route (no alternatives)
      * - Doesn't return HTTP headers.
      * - If one request fails an error is thrown and the rest are chucked.
-     * - Only merges the 'legs' section of the 'route', does no update waypoints, duration or geometery.
+     * - Only merges the 'legs' section of the 'route', does not update waypoints, duration or geometery.
      */
     public function sendChunk($chunkSize = 100)
     {
