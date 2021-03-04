@@ -128,8 +128,7 @@ class RouteServiceTest extends TestCase
      */
     public function testSendChunkReturnsSameAsSend()
     {
-    //     file_put_contents('w:/www/inoria/public/output-normal.json', '');
-    //     file_put_contents('w:/www/inoria/public/output-chunked.json', '');
+
         $coordinates = [ // 32 known coordinates
             new LatLng(51.592862, -0.16597),
             new LatLng(51.592847, -0.165962),
@@ -179,9 +178,6 @@ class RouteServiceTest extends TestCase
         /** @var RouteServiceResponse $chunkedResponse */
         $chunkedResponse = $chunkedRouteRequest->sendChunk(10);
 
-        file_put_contents('w:/www/inoria/public/output-normal.json', json_encode($normalResponse->getResponseData()->waypoints, JSON_PRETTY_PRINT));
-        file_put_contents('w:/www/inoria/public/output-chunked.json', json_encode($chunkedResponse->getResponseData()->waypoints, JSON_PRETTY_PRINT));
-
         $this->assertEquals(
             count($normalResponse->getResponseData()->waypoints),
             count($chunkedResponse->getResponseData()->waypoints),
@@ -196,9 +192,6 @@ class RouteServiceTest extends TestCase
 
         $normalRouteData = $normalResponse->getFirstRoute()->getRouteData();
         $chunkedRouteData = $chunkedResponse->getFirstRoute()->getRouteData();
-
-        // file_put_contents('w:/www/inoria/public/output-normal.json', json_encode($normalRouteData, JSON_PRETTY_PRINT));
-        // file_put_contents('w:/www/inoria/public/output-chunked.json', json_encode($chunkedRouteData, JSON_PRETTY_PRINT));
 
         // We're not currently testing for geometry coordinates.
         // $this->assertEquals(
