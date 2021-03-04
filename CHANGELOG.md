@@ -3,7 +3,11 @@
 All notable changes to `lara-osrm` will be documented in this file
 
 # Unreleased Changes
- - sendChunk to allow some requests to work with many hundreds of waypoints
+
+ - None
+## 2.1 2021-03-04
+
+ - Add `sendChunk()` method to enable huge requests
 
 ## 2.0 2020-12-02
 
