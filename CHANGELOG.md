@@ -2,6 +2,9 @@
 
 All notable changes to `lara-osrm` will be documented in this file
 
+# Unreleased Changes
+ - sendChunk to allow some requests to work with many hundreds of waypoints
+
 ## 2.0 2020-12-02
 
 Version 2 brings the library up to date with the latest dependencies, adds a few minor features,
