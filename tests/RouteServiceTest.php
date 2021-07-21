@@ -67,8 +67,7 @@ class RouteServiceTest extends TestCase
     }
 
     /**
-     * Check that if we make an invalid request (a route request with only
-     * one waypoint) get get an error.
+     * Check that we can get the distance of a route in several different formats.
      */
     public function testGettingDistanceInDifferentUnits()
     {
@@ -82,7 +81,7 @@ class RouteServiceTest extends TestCase
         /* @var $route \Dmgctrlr\LaraOsrm\Models\Route */
         $route = $response->getFirstRoute();
         $this->assertEquals(
-            '5621.50',
+            '5621.60',
             $route->getDistance(),
             'Get the distance in meters'
         );
