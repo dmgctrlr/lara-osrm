@@ -5,6 +5,10 @@ All notable changes to `lara-osrm` will be documented in this file
 # Unreleased Changes
 
  - None
+
+## 2.1.1 2022-02-16
+
+ - Fixed Dmgctrlr\LaraOsrm\Models\LatLng not found error in AbstractGroupResponse
 ## 2.1 2021-03-04
 
  - Add `sendChunk()` method to enable huge requests
