@@ -4,7 +4,7 @@ namespace Dmgctrlr\LaraOsrm;
 
 use Dmgctrlr\LaraOsrm\Responses\RouteServiceResponse;
 use Dmgctrlr\LaraOsrm\AbstractResponse;
-use Dmgctrlr\Laraosrm\Models\LatLng;
+use Dmgctrlr\LaraOsrm\Models\LatLng;
 
 abstract class AbstractGroupResponse
 {
